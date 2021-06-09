@@ -28,6 +28,7 @@ mix
     .webpackConfig({ plugins: [new ESLintPlugin(), dotEnvPlugin] })
     .sourceMaps(false, 'source-map')
     .copyDirectory('resources/_public', 'public')
+    .copyDirectory('resources/img', 'public/img')
     .js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [])
     .react()
