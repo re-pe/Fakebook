@@ -1,6 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const mix = require('laravel-mix');
 const ESLintPlugin = require('eslint-webpack-plugin');
+require('dotenv').config();
+const webpack = require('webpack');
 
 /*
  |--------------------------------------------------------------------------
@@ -13,11 +15,20 @@ const ESLintPlugin = require('eslint-webpack-plugin');
  |
  */
 
+const dotEnvPlugin = new webpack.DefinePlugin({
+    'process.env': {
+        APP_NAME: JSON.stringify(process.env.APP_NAME || 'Default app name'),
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+    },
+});
+
+const { APP_DOMAIN, SERVER_PORT } = process.env;
+
 mix
-    .webpackConfig({ plugins: [new ESLintPlugin()] })
+    .webpackConfig({ plugins: [new ESLintPlugin(), dotEnvPlugin] })
     .sourceMaps(false, 'source-map')
     .copyDirectory('resources/_public', 'public')
     .js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [])
     .react()
-    .browserSync({ proxy: 'fb.local:8000', ui: false });
+    .browserSync({ proxy: `${APP_DOMAIN}:${SERVER_PORT}`, ui: false, open: 'external', host: APP_DOMAIN });
