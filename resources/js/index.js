@@ -4,12 +4,18 @@ import './bootstrap';
 import React from 'react';
 import { debugContextDevtool } from 'react-context-devtool';
 import { render } from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import UserContextProvider from './Contexts/UserContext';
 import App from './App';
 
 const container = document.getElementById('app');
 
 render(
-    <App />,
+    <UserContextProvider>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </UserContextProvider>,
     container,
 );
 
