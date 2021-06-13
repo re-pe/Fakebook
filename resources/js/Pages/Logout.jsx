@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button, Container, Nav } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import { LinkContainer } from 'react-router-bootstrap';
 import { useUserContext } from '../Contexts/UserContext';
 
 const { axios } = window;
@@ -36,7 +35,7 @@ const Logout = () => {
         event.preventDefault();
         try {
             await clearData();
-            history.push('/login');
+            history.push('/');
         } catch (e) {
             // eslint-disable-next-line no-alert
             alert(e.message);
@@ -44,25 +43,29 @@ const Logout = () => {
     };
 
     return (
-        <Container className="text-center">
-            <h1>Do you really want to logout?</h1>
-            <Nav className="row justify-content-center" navbar>
-                <Nav.Item className="mr-2">
-                    <LinkContainer to="" onClick={() => history.goBack()}>
-                        <Button>
-                            Cancel
-                        </Button>
-                    </LinkContainer>
-                </Nav.Item>
-                <Nav.Item>
-                    <LinkContainer to="" onClick={handleClick}>
-                        <Button>
-                            OK
-                        </Button>
-                    </LinkContainer>
-                </Nav.Item>
-            </Nav>
-        </Container>
+        <Form
+            style={{ width: '370px' }}
+            className="mx-auto mt-5"
+        >
+            <Form.Group id="xx" className="text-center">
+                <Button
+                    onClick={() => history.goBack()}
+                    className="m-1"
+                    variant="warning"
+                    // type="button"
+                >
+                    Cancel
+                </Button>
+                <Button
+                    onClick={handleClick}
+                    className="m-1"
+                    variant="success"
+                    // type="button"
+                >
+                    OK
+                </Button>
+            </Form.Group>
+        </Form>
     );
 };
 
