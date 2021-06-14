@@ -21,6 +21,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'username',
+        'avatar',
         'email',
         'password',
     ];
@@ -43,4 +44,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Get user posts
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
