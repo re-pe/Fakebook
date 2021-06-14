@@ -3,9 +3,15 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\PostSeeder;
+use Database\Seeders\UserSeeder;
+use Database\Seeders\CommentSeeder;
+use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder
 {
+    protected $toTruncate = ['users', 'posts', 'comments'];
+
     /**
      * Seed the application's database.
      *
@@ -13,6 +19,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        Schema::disableForeignKeyConstraints();
+
+        $this->call([
+            UserSeeder::class,
+            PostSeeder::class,
+            CommentSeeder::class,
+        ]);
+
+        Schema::enableForeignKeyConstraints();
     }
 }
