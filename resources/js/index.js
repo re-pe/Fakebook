@@ -2,6 +2,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './bootstrap';
 import React from 'react';
+import '../css/index.css';
 import { debugContextDevtool } from 'react-context-devtool';
 import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
