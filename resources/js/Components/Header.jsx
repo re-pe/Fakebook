@@ -14,12 +14,11 @@ export default function Header(props) {
     const { APP_NAME } = process.env;
 
     return (
-        <Container className="px-0" fluid>
+        <Container className="sticky-top" fluid>
             <Navbar
                 bg="light"
                 // variant="info"
-                // sticky="top"
-                className="navbar shadow-sm py-3 px-0 mb-5 text-info"
+                className="navbar mx-3 shadow-sm py-3 px-0"
                 expand
             >
                 <Nav className={classNames('col-2')} navbar><h3>{APP_NAME}</h3></Nav>
@@ -31,7 +30,7 @@ export default function Header(props) {
                                 <Nav.Link><p>{userContext.user.username}</p></Nav.Link>
                                 <LinkContainer to="/logout">
                                     <Nav.Link>
-                                        <FontAwesomeIcon icon={faSignOutAlt} className="mr-2 text-info" />
+                                        <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
                                     </Nav.Link>
                                 </LinkContainer>
                             </Nav>
@@ -40,12 +39,12 @@ export default function Header(props) {
                             <Nav className="col-2 justify-content-end" navbar>
                                 <LinkContainer to="/login">
                                     <Nav.Link>
-                                        <FontAwesomeIcon icon={faSignInAlt} className="mr-2 text-info" />
+                                        <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
                                     </Nav.Link>
                                 </LinkContainer>
                                 <LinkContainer to="/register">
                                     <Nav.Link>
-                                        <FontAwesomeIcon icon={faUserPlus} className="mr-2 text-info" />
+                                        <FontAwesomeIcon icon={faUserPlus} className="mr-2" />
                                     </Nav.Link>
                                 </LinkContainer>
                             </Nav>

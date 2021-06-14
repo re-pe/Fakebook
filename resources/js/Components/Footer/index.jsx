@@ -5,13 +5,13 @@ export default function Footer() {
     return (
         <Container
             fluid
-            bg="info"
+            bg="dark"
             id="footer"
             className="px-0 mt-auto"
         >
             <Navbar
                 id="navbar"
-                bg="info"
+                bg="dark"
                 sticky="bottom"
                 className="navbar text-light shadow-sm p-3 m-0 mt-5"
                 expand
