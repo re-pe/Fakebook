@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\LikeSeeder;
 use Database\Seeders\PostSeeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\CommentSeeder;
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PostSeeder::class,
             CommentSeeder::class,
+            LikeSeeder::class,
         ]);
 
         Schema::enableForeignKeyConstraints();
