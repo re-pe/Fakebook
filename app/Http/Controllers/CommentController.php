@@ -7,14 +7,31 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['cors']);
+        $this->middleware(['auth:sanctum'])->only(['store', 'update', 'destroy']);
+        // $this->middleware(['log.routes']);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($postId)
     {
-        //
+        $comments = Comment::
+        orderBy('id', 'desc')->
+        where('post_id', $postId)->
+        with([
+            'user' => function($query) {
+                $query->select('id', 'username', 'avatar');
+            },
+        ])->
+        get()->toArray();
+
+        return $comments;
     }
 
     /**

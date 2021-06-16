@@ -2,27 +2,52 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Like;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['cors']);
+        $this->middleware(['auth:sanctum'])->only(['store', 'update', 'destroy']);
+        // $this->middleware(['log.routes']);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $posts = Post::
+        orderBy('id', 'desc')->
+        with([
+            'user' => function($query) {
+                $query->select('id', 'username', 'avatar');
+            },
+            'likes' => function($query) {
+                $query->select('id', 'post_id', 'user_id');
+            },
+        ])->
+        withCount(['likes', 'comments'])->
+        get();
 
-        return Post::select([
-            '*',
-            'username' => User::selectRaw('username')->whereColumn('id', 'user_id'),
-            'avatar' => User::selectRaw('avatar')->whereColumn('id', 'user_id'),
-        ])->withCount(['comments'])->get();
-        // return  Post::all()->load('user');
-        // return  Post::with('user');
+        $posts->each(function($post) {
+            $post['liked_users'] = Arr::pluck($post['likes'], 'user_id');
+            return $post;
+        });
+
+        // foreach($posts as &$post) {
+        //     $post['likesUsers'] = Arr::pluck($post['likes'], 'user_id');
+        // }
+
+        return $posts;
     }
 
      /**
