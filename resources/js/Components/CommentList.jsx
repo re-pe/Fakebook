@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Comment from './Comment';
-import Editor from './Editor';
+import EditModal from './EditModal';
 
 const { axios } = window;
 
@@ -38,7 +38,7 @@ export default function CommentList({ postId }) {
     return (
         <>
             <Row className="mt-4">
-                <Col className="text-center"><Editor variant="success" buttonIndex={[0]} title="Comment Editor" /></Col>
+                <Col className="text-center"><EditModal variant="success" title="Comment" buttonIndex={[0]} /></Col>
             </Row>
             {commentsData.map(
                 (comment) => <Comment key={comment.id} comment={comment} />, // <Comment key={comment.id} comment={comment} />,

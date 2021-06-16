@@ -1,7 +1,8 @@
 import React from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
 import CommentCard from './CommentCard';
-import Editor from './Editor';
+import EditModal from './EditModal';
+import DeleteModal from './DeleteModal';
 
 export default function Post({ post }) {
     const { id, title, content } = post;
@@ -21,7 +22,8 @@ export default function Post({ post }) {
                             </Card.Text>
                         </Col>
                         <Col className="text-end">
-                            <Editor buttonIndex={[1, 2]} />
+                            <EditModal buttonIndex={[1]} />
+                            <DeleteModal />
                         </Col>
                     </Row>
                 </Card.Header>

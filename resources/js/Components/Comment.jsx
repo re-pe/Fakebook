@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
-import Editor from './Editor';
+import EditModal from './EditModal';
+import DeleteModal from './DeleteModal';
 
 export default function Comment({ comment }) {
     const { id, title, content } = comment;
@@ -19,7 +20,8 @@ export default function Comment({ comment }) {
                         </Card.Text>
                     </Col>
                     <Col className="text-end">
-                        <Editor variant="success" buttonIndex={[1, 2]} title="Comment Editor" />
+                        <EditModal title="Comment" buttonIndex={[1]} />
+                        <DeleteModal title="Comment" />
                     </Col>
                 </Row>
             </Card.Header>

@@ -1,25 +1,23 @@
 import React, { useState } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Form, Modal } from 'react-bootstrap';
 import {
-    faPenNib, faPlus, faTimes,
+    faPenNib, faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { useUserContext } from '../Contexts/UserContext';
 
-export default function Editor({ variant = 'primary', buttonIndex = [0, 1, 2], title = 'Post Editor' } = {}) {
+export default function Editor({ variant = 'primary', title = 'Post', buttonIndex = [0, 1] } = {}) {
     const { userContext } = useUserContext({});
     const { user } = userContext;
 
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [toEdit, setToEdit] = useState(false);
+    const cancelToEdit = () => setToEdit(false);
+    const startToEdit = () => setToEdit(true);
 
     const buttonData = [
-        { key: 'new', icon: faPlus, onClick: handleShow, text: 'text-white' },
-        { key: 'edit', icon: faPenNib, onClick: handleShow, text: 'text-warning' },
-        { key: 'delete', icon: faTimes, onClick: handleShow, text: 'text-danger' },
+        { key: 'new', icon: faPlus, onClick: startToEdit, text: 'text-white' },
+        { key: 'edit', icon: faPenNib, onClick: startToEdit, text: 'text-warning' },
     ];
 
     return (
@@ -37,26 +35,28 @@ export default function Editor({ variant = 'primary', buttonIndex = [0, 1, 2], t
             ))}
 
             <Modal
-                show={show}
-                onHide={handleClose}
+                show={toEdit}
+                onHide={cancelToEdit}
                 backdrop="static"
                 keyboard={false}
-                size="lg"
+                size="xl"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>{title}</Modal.Title>
+                    <Modal.Title>
+                        {title}
+                        { ' Editor' }
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    I will not close if you click outside me. Don&apos;t even try to press
-                    escape key.
+                    <Form />
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
+                    <Button variant="secondary" onClick={cancelToEdit}>
+                        Cancel
                     </Button>
-                    <Button variant="primary">Submit</Button>
+                    <Button variant="primary">Save</Button>
                 </Modal.Footer>
             </Modal>
         </>
