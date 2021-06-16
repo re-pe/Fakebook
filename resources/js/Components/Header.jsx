@@ -21,19 +21,19 @@ export default function Header(props) {
             <Navbar
                 bg="light"
                 variant="light"
-                className="navbar p-3 shadow-sm"
+                className="navbar text-primary p-3 shadow-sm"
                 expand
             >
                 <Nav className={classNames('col-2')} navbar><h1>{APP_NAME}</h1></Nav>
                 <Nav className="text-center mx-auto" navbar><h3>{title}</h3></Nav>
                 {userContext.user
                     ? (
-                        <Nav className="col-2 justify-content-end" navbar>
+                        <Nav className="col-2 justify-content-end text-primary" navbar>
                             <LinkContainer to="">
-                                <Nav.Link>{userContext.user.username}</Nav.Link>
+                                <Nav.Link className="text-primary">{userContext.user.username}</Nav.Link>
                             </LinkContainer>
                             <LinkContainer to="/logout">
-                                <Nav.Link>
+                                <Nav.Link className="text-primary">
                                     <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
                                 </Nav.Link>
                             </LinkContainer>
@@ -42,12 +42,12 @@ export default function Header(props) {
                     : (
                         <Nav className="col-2 justify-content-end" navbar>
                             <LinkContainer to="/login">
-                                <Nav.Link>
+                                <Nav.Link className="text-primary">
                                     <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
                                 </Nav.Link>
                             </LinkContainer>
                             <LinkContainer to="/register">
-                                <Nav.Link>
+                                <Nav.Link className="text-primary">
                                     <FontAwesomeIcon icon={faUserPlus} className="mr-2" />
                                 </Nav.Link>
                             </LinkContainer>
