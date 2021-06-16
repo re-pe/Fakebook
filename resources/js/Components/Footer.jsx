@@ -1,26 +1,26 @@
 import React from 'react';
-import { Container, Navbar } from 'react-bootstrap';
+import { Container, Navbar, Nav } from 'react-bootstrap';
 
 export default function Footer() {
     return (
         <Container
             fluid
-            bg="dark"
             id="footer"
             className="px-0 mt-auto"
         >
             <Navbar
                 id="navbar"
-                bg="dark"
+                bg="primary"
+                variant="dark"
                 sticky="bottom"
                 className="navbar text-light shadow-sm p-3 m-0 mt-5"
                 expand
             >
-                <footer className="footer mx-auto">
+                <Nav className="text-center mx-auto" navbar>
                     <span>
                         &copy; 2021 Rėdas Peškaitis
                     </span>
-                </footer>
+                </Nav>
             </Navbar>
         </Container>
     );
