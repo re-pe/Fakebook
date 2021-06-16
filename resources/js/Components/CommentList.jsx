@@ -1,38 +1,48 @@
-import React from 'react';
-import { Accordion, Button, Card, Col, Row } from 'react-bootstrap';
-import {
-    faAngleDown, faThumbsUp,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
+import Comment from './Comment';
+import Editor from './Editor';
 
-export default function CommentList({ commentsCount }) {
+const { axios } = window;
+
+export default function CommentList({ postId }) {
+    const [commentsData, setCommentsData] = useState([]);
+
+    // const goBack = (event) => {
+    //     event.preventDefault();
+    //     window.history.back();
+    // };
+
+    useEffect(() => {
+        const config = {
+            method: 'GET',
+            url: `/api/posts/${postId}/comments`,
+            headers: {
+                Accept: 'application/json',
+            },
+        };
+        axios(config)
+            .then((response) => {
+                // eslint-disable-next-line no-console
+                // console.log(response.data);
+                setCommentsData(response.data);
+                // setLastPage(response.data.last_page);
+                // setLoading(false);
+            })
+            .catch((error) => {
+                // eslint-disable-next-line no-console
+                console.log(error);
+            });
+    }, []);
+
     return (
-        <Accordion>
-            <Card>
-                <Card.Header>
-                    <Row>
-                        <Col className="text-start">
-                            <Button variant="outline-primary">
-                                <FontAwesomeIcon icon={faThumbsUp} className="mr-1" />
-                                {' Likes: '}
-                            </Button>
-                        </Col>
-                        <Col className="text-end">
-                            <Accordion.Toggle
-                                as={Button}
-                                variant={`${commentsCount > 0 ? '' : 'outline-'}primary`}
-                                eventKey="0"
-                            >
-                                {`Comments: ${commentsCount} `}
-                                <FontAwesomeIcon icon={faAngleDown} className="mr-1" />
-                            </Accordion.Toggle>
-                        </Col>
-                    </Row>
-                </Card.Header>
-                <Accordion.Collapse eventKey="0">
-                    <Card.Body>CommentList</Card.Body>
-                </Accordion.Collapse>
-            </Card>
-        </Accordion>
+        <>
+            <Row className="mt-4">
+                <Col className="text-center"><Editor variant="success" buttonIndex={[0]} title="Comment Editor" /></Col>
+            </Row>
+            {commentsData.map(
+                (comment) => <Comment key={comment.id} comment={comment} />, // <Comment key={comment.id} comment={comment} />,
+            )}
+        </>
     );
 }

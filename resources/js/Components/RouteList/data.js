@@ -12,7 +12,7 @@ import {
 export const accessType = Object.freeze({ requiresLogin: 1, publicOnly: 2, always: 3 });
 
 export default [
-    { exact: true, path: '/', content: Main, title: 'Main', accessibility: accessType.always },
+    { exact: true, path: '/', content: Main, title: 'Posts', accessibility: accessType.always },
     { exact: true, path: '/about', content: About, title: 'About us', accessibility: accessType.always },
     { exact: true, path: '/loggedin', content: LoggedIn, title: 'LoggeIn', accessibility: accessType.always },
     { exact: true, path: '/login', content: Login, title: 'Login', accessibility: accessType.publicOnly },

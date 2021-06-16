@@ -21,8 +21,8 @@ export default function Header(props) {
                 className="navbar mx-3 shadow-sm py-3 px-0"
                 expand
             >
-                <Nav className={classNames('col-2')} navbar><h3>{APP_NAME}</h3></Nav>
-                <Nav className="text-center mx-auto" navbar><h1>{title}</h1></Nav>
+                <Nav className={classNames('col-2')} navbar><h1>{APP_NAME}</h1></Nav>
+                <Nav className="text-center mx-auto" navbar><h3>{title}</h3></Nav>
                 {
                     userContext.user
                         ? (

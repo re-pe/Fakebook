@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import Post from './Post';
+import Editor from './Editor';
 
 const { axios } = window;
 
@@ -35,6 +37,9 @@ export default function PostList() {
 
     return (
         <>
+            <Row className="mt-4">
+                <Col className="text-center"><Editor buttonIndex={[0]} /></Col>
+            </Row>
             {postsData.map(
                 (post) => <Post key={post.id} post={post} />,
             )}
