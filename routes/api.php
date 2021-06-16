@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +22,7 @@ use App\Http\Controllers\PostController;
 // });
 
 Route::apiResource('posts', PostController::class);
-
+Route::prefix('posts/{post}')->group(function () {
+    Route::apiResource('comments', CommentController::class);
+});
+Route::apiResource('likes', LikeController::class);
