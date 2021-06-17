@@ -21,6 +21,16 @@ class CommentController extends Controller
      */
     public function index($postId)
     {
+
+    }
+
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexOfPost($postId)
+    {
         $comments = Comment::
         orderBy('id', 'desc')->
         where('post_id', $postId)->
@@ -74,8 +84,13 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy(Request $request, Comment $comment)
     {
-        //
+        $postId = $comment->post_id;
+        $comment = Comment::find($comment->id);
+        $result=$comment->delete();
+        $comments = Comment::where('post_id', $postId)->get();
+
+        return response(['comments' => $comments]);
     }
 }

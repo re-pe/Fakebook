@@ -80,10 +80,10 @@ class LikeController extends Controller
     public function destroy(Request $request, Like $like)
     {
 
+        $postId = $like->post_id;
         $like = Like::find($like->id);
         $result=$like->delete();
-        // $likes = Like::where('post_id', $request->post_id)->get();
-        $likes = Like::where('post_id', $request->post_id)->get();
+        $likes = Like::where('post_id', $postId)->get();
 
         return response(['like' => [], 'likes' => $likes]);
     }
