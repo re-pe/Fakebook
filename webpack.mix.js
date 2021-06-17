@@ -22,7 +22,7 @@ const dotEnvPlugin = new webpack.DefinePlugin({
     },
 });
 
-const { APP_DOMAIN, SERVER_PORT } = process.env;
+// const { APP_DOMAIN, SERVER_PORT } = process.env;
 
 mix
     .webpackConfig({ plugins: [new ESLintPlugin(), dotEnvPlugin] })
@@ -31,5 +31,5 @@ mix
     .copyDirectory('resources/img', 'public/img')
     .js('resources/js/index.js', 'public/js')
     .postCss('resources/css/index.css', 'public/css', [])
-    .react()
-    .browserSync({ proxy: `${APP_DOMAIN}:${SERVER_PORT}`, ui: false, open: 'external', host: APP_DOMAIN });
+    .react();
+// .browserSync({ proxy: `${APP_DOMAIN}:${SERVER_PORT}`, ui: false, open: 'external', host: APP_DOMAIN });
