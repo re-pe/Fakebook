@@ -28,8 +28,8 @@ class CommentFactory extends Factory
         return [
             'post_id' => $postKeys[array_rand($postKeys)],
             'user_id' => $userKeys[array_rand($userKeys)],
-            'title' => $this->faker->unique()->sentence,
-            'content' => $this->faker->paragraph,
+            'title' => $this->faker->unique()->realText(60, 2),
+            'content' => $this->faker->realText(300, 2),
         ];
     }
 }

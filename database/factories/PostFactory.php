@@ -24,7 +24,7 @@ class PostFactory extends Factory
     {
         $userKeys = User::all()->modelKeys();
         return [
-            'title' => $this->faker->unique()->realText(40, 2),
+            'title' => $this->faker->unique()->realText(100, 2),
             'content' => $this->faker->realText(1000, 2),
             'user_id' => $userKeys[array_rand($userKeys)],
         ];
