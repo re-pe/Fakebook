@@ -22,7 +22,6 @@ use App\Http\Controllers\CommentController;
 // });
 
 Route::apiResource('posts', PostController::class);
-Route::prefix('posts/{post}')->group(function () {
-    Route::apiResource('comments', CommentController::class);
-});
+Route::get('posts/{post}/comments', [CommentController::class, 'indexOfPost'])->name('posts.comments.index');
+Route::apiResource('comments', CommentController::class);
 Route::apiResource('likes', LikeController::class);
