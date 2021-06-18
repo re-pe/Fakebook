@@ -14,11 +14,12 @@ const Register = () => {
         email: '',
         password: '',
         password_confirmation: '',
+        avatar: '',
     });
     const [validated, setValidated] = useState(false);
     const [errorData, setErrorData] = useState({});
 
-    const getUserData = async () => {
+    const registerUser = async () => {
         const config = {
             method: 'post',
             url: '/register',
@@ -55,7 +56,7 @@ const Register = () => {
             setValidated(true);
             return;
         }
-        getUserData();
+        registerUser();
     };
 
     const handleChange = (event) => setUserData({

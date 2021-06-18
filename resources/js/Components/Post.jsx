@@ -1,10 +1,8 @@
 import React from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
 import CommentCard from './CommentCard';
-import EditModal from './EditModal';
-import DeleteModal from './DeleteModal';
 
-export default function Post({ post }) {
+export default function Post({ post, children }) {
     const { id, title, content } = post;
     const { username, avatar } = post.user;
     const createdAt = post.created_at;
@@ -22,8 +20,7 @@ export default function Post({ post }) {
                             </Card.Text>
                         </Col>
                         <Col className="text-end">
-                            <EditModal buttonIndex={[1]} />
-                            <DeleteModal />
+                            {children}
                         </Col>
                     </Row>
                 </Card.Header>
@@ -45,7 +42,7 @@ export default function Post({ post }) {
                 </Card.Body>
                 <Card.Footer>
                     <Row className="mx-4">
-                        <CommentCard {...{ post }} />
+                        <CommentCard post={post} />
                     </Row>
                 </Card.Footer>
             </Card>

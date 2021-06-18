@@ -7,28 +7,34 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { useUserContext } from '../Contexts/UserContext';
 
-export default function Editor({ variant = 'primary', title = 'Post' } = {}) {
+const { _ } = window;
+
+export default function DeleteModal({ item = {}, variant = 'primary', objectType = 'post', setItemToDelete } = {}) {
     const { userContext } = useUserContext({});
     const { user } = userContext;
 
-    const [toDelete, setToDelete] = useState(false);
-    const cancelToDelete = () => setToDelete(false);
-    const startToDelete = () => setToDelete(true);
+    const [showModal, setShowModal] = useState(false);
+    const closeModal = () => setShowModal(false);
+    const openModal = () => setShowModal(true);
+    const deleteItem = () => {
+        closeModal();
+        setItemToDelete(item);
+    };
 
     return (
         <>
             <Button
                 variant={variant || 'primary'}
                 className={classNames('p-0', 'text-danger')}
-                onClick={startToDelete}
-                disabled={!user}
+                onClick={openModal}
+                disabled={!user || user.id !== item.user_id}
             >
                 <FontAwesomeIcon icon={faTimes} className="mx-1" style={{ width: '1rem' }} />
             </Button>
 
             <Modal
-                show={toDelete}
-                onHide={cancelToDelete}
+                show={showModal}
+                onHide={closeModal}
                 backdrop="static"
                 keyboard={false}
                 aria-labelledby="contained-modal-title-vcenter"
@@ -36,18 +42,22 @@ export default function Editor({ variant = 'primary', title = 'Post' } = {}) {
             >
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        {title}
-                        { ' Delete' }
+                        {'Delete '}
+                        {_.upperFirst(objectType)}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    Do you realy want to delete this post?
+                    Do you realy want to delete the
+                    {' '}
+                    {objectType}
+                    {_.isEmpty(item) ? '' : ` #${item.id}`}
+                    ?
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={cancelToDelete}>
+                    <Button variant="secondary" onClick={closeModal}>
                         Cancel
                     </Button>
-                    <Button variant="primary">Delete</Button>
+                    <Button variant="primary" onClick={deleteItem}>Delete</Button>
                 </Modal.Footer>
             </Modal>
         </>

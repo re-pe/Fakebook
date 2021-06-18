@@ -7,9 +7,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useUserContext } from '../Contexts/UserContext';
 import CommentList from './CommentList';
 
+const { _, axios } = window;
+
 export default function CommentCard({ post }) {
-    const postId = post.id;
-    const commentsCount = post.comments_count;
+    const { id } = post;
+    const [commentCount, setCommentCount] = useState(post.comments_count);
+    const [userCommentsCount, setUserCommentsCount] = useState(0);
+
+    const [likesCount, setLikesCount] = useState(post.likes.length);
     const { userContext } = useUserContext({});
     const { user } = userContext;
     const [like, setLike] = useState(
@@ -17,7 +22,6 @@ export default function CommentCard({ post }) {
             ? (post.likes.filter((item) => item.user_id === user.id)[0] || {})
             : {},
     );
-    const [likesCount, setLikesCount] = useState(post.likes.length);
 
     const [expanded, setExpanded] = useState(false);
 
@@ -38,12 +42,6 @@ export default function CommentCard({ post }) {
         );
     }
 
-    // const [showComments, setShowComments] = useState(false);
-    // const [commentsData, setCommentsData] = useState([]);
-
-    // const { axios } = window;
-    const { _, axios } = window;
-
     const changeLikes = (newLikesCount) => {
         if (newLikesCount === likesCount) {
             return;
@@ -58,9 +56,9 @@ export default function CommentCard({ post }) {
                 headers: {
                     Accept: 'application/json',
                 },
-                data: { post_id: postId, user_id: user.id },
+                data: { post_id: id, user_id: user.id },
             };
-            // setLike({ id: 1, post_id: postId, user_id: user.Id });
+            // setLike({ id: 1, post_id: id, user_id: user.Id });
         } else {
             config = {
                 method: 'DELETE',
@@ -88,9 +86,29 @@ export default function CommentCard({ post }) {
         // setLikesCount(newLikesCount);
     };
 
-    const handleClick = () => {
+    const toggleLike = () => {
         const newLikesCount = _.isEmpty(like) ? (likesCount + 1) : (likesCount - 1);
         changeLikes(newLikesCount);
+    };
+
+    const getLikeVariant = () => {
+        if (!_.isEmpty(like)) {
+            return 'success';
+        }
+        if (likesCount > 0) {
+            return 'primary';
+        }
+        return 'outline-primary';
+    };
+
+    const getCommentVariant = () => {
+        if (userCommentsCount > 0) {
+            return 'success';
+        }
+        if (commentCount > 0) {
+            return 'primary';
+        }
+        return 'outline-primary';
     };
 
     return (
@@ -100,8 +118,8 @@ export default function CommentCard({ post }) {
                     <Row>
                         <Col className="text-start">
                             <Button
-                                variant={_.isEmpty(like) ? 'outline-primary' : 'success'}
-                                onClick={handleClick}
+                                variant={getLikeVariant()}
+                                onClick={toggleLike}
                                 disabled={!user}
                             >
                                 <FontAwesomeIcon icon={faThumbsUp} className="mr-1" />
@@ -112,17 +130,23 @@ export default function CommentCard({ post }) {
                         <Col className="text-end">
                             <ToggleButton
                                 as={Button}
-                                variant={commentsCount > 0 ? 'success' : 'outline-primary'}
+                                variant={getCommentVariant()}
                                 eventKey="0"
                             >
-                                {`Comments: ${commentsCount} `}
+                                {`Comments: ${commentCount} `}
                                 <FontAwesomeIcon icon={faAngleDown} className="mr-1" />
                             </ToggleButton>
                         </Col>
                     </Row>
                 </Card.Header>
                 <Accordion.Collapse eventKey="0">
-                    <Card.Body><CommentList {...{ postId }} /></Card.Body>
+                    <Card.Body>
+                        <CommentList
+                            postId={id}
+                            setCommentCount={setCommentCount}
+                            setUserCommentsCount={setUserCommentsCount}
+                        />
+                    </Card.Body>
                 </Accordion.Collapse>
             </Card>
         </Accordion>

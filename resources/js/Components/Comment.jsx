@@ -1,11 +1,14 @@
 import React from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
-import EditModal from './EditModal';
-import DeleteModal from './DeleteModal';
 
-export default function Comment({ comment }) {
-    const { id, title, content } = comment;
-    const { username, avatar } = comment.user;
+const { _ } = window;
+
+export default function Comment({ comment, children }) {
+    if (_.isEmpty(comment)) {
+        return (<></>);
+    }
+    const { id, title, content, user } = comment;
+    const { username, avatar } = user;
     const createdAt = comment.created_at;
 
     return (
@@ -20,8 +23,7 @@ export default function Comment({ comment }) {
                         </Card.Text>
                     </Col>
                     <Col className="text-end">
-                        <EditModal title="Comment" buttonIndex={[1]} />
-                        <DeleteModal title="Comment" />
+                        {children}
                     </Col>
                 </Row>
             </Card.Header>
@@ -31,7 +33,7 @@ export default function Comment({ comment }) {
                         <Card.Img variant="top" src={avatar} className="rounded" style={{ width: 96 }} />
                         <Card.Text as="p" className="mt-3">{username}</Card.Text>
                     </Col>
-                    <Col md="9" className="text-center">
+                    <Col md="9" className="text-end">
                         <Card.Title as="h5" className="mt-3">{title}</Card.Title>
                     </Col>
                 </Row>
