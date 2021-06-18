@@ -23,7 +23,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $posts = Post::
         orderBy('id', 'desc')->
@@ -43,10 +43,6 @@ class PostController extends Controller
             return $post;
         });
 
-        // foreach($posts as &$post) {
-        //     $post['likesUsers'] = Arr::pluck($post['likes'], 'user_id');
-        // }
-
         return $posts;
     }
 
@@ -58,15 +54,19 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $validation = $request->validate([
-            'title' => 'required|max:255|unique:posts',
+        $request->validate([
+            'title' => 'required|max:100|unique:posts',
             'content' => 'required',
             'user_id' => 'required|integer',
         ]);
 
-        Post::create($request->all());
+        Post::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'user_id' => $request->user_id,
+        ]);
 
-        return $validation;
+        return $this->index();
     }
 
     /**
@@ -89,7 +89,19 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:100|unique:posts',
+            'content' => 'required',
+            'user_id' => 'required|integer',
+        ]);
+
+        Post::where('id', $request->id)->update([
+            'title' => $request->title,
+            'content' => $request->content,
+            'user_id' => $request->user_id,
+        ]);
+
+        return $this->index();
     }
 
     /**
@@ -100,6 +112,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post = Post::find($post->id);
+        $post->delete();
+
+        $posts = $this->index();
+
+        return response($posts);
     }
 }

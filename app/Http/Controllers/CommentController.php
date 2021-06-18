@@ -19,7 +19,7 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($postId)
+    public function index()
     {
 
     }
@@ -52,7 +52,21 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:100|unique:comments',
+            'content' => 'required',
+            'post_id' => 'required|integer',
+            'user_id' => 'required|integer',
+        ]);
+
+        Comment::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'post_id' => $request->post_id,
+            'user_id' => $request->user_id,
+        ]);
+
+        return $this->indexOfPost($request->post_id);
     }
 
     /**
@@ -75,7 +89,21 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:100|unique:comments',
+            'content' => 'required',
+            'post_id' => 'required|integer',
+            'user_id' => 'required|integer',
+        ]);
+
+        Comment::where('id', $request->id)->update([
+            'title' => $request->title,
+            'content' => $request->content,
+            'post_id' => $request->post_id,
+            'user_id' => $request->user_id,
+        ]);
+
+        return $this->indexOfPost($request->post_id);
     }
 
     /**
@@ -88,9 +116,10 @@ class CommentController extends Controller
     {
         $postId = $comment->post_id;
         $comment = Comment::find($comment->id);
-        $result=$comment->delete();
-        $comments = Comment::where('post_id', $postId)->get();
+        $comment->delete();
 
-        return response(['comments' => $comments]);
+        $comments = $this->indexOfPost($postId);
+
+        return response($comments);
     }
 }
