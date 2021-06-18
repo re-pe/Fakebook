@@ -22,14 +22,14 @@ const dotEnvPlugin = new webpack.DefinePlugin({
     },
 });
 
-const { APP_DOMAIN, SERVER_PORT } = process.env;
+// const { APP_DOMAIN, SERVER_PORT } = process.env;
 
 mix
     .webpackConfig({ plugins: [new ESLintPlugin(), dotEnvPlugin] })
     .sourceMaps(false, 'source-map')
     .copyDirectory('resources/_public', 'public')
     .copyDirectory('resources/img', 'public/img')
-    .js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [])
-    .react()
-    .browserSync({ proxy: `${APP_DOMAIN}:${SERVER_PORT}`, ui: false, open: 'external', host: APP_DOMAIN });
+    .js('resources/js/index.js', 'public/js')
+    .postCss('resources/css/index.css', 'public/css', [])
+    .react();
+// .browserSync({ proxy: `${APP_DOMAIN}:${SERVER_PORT}`, ui: false, open: 'external', host: APP_DOMAIN });
