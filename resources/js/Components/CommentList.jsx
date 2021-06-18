@@ -121,7 +121,7 @@ export default function CommentList({ postId, setCommentCount, setUserCommentsCo
             <Row className="mt-4">
                 <Col className="text-center">
                     <EditModal
-                        item={{ post_id: postId, user_id: user.id }}
+                        item={user ? { post_id: postId, user_id: user.id } : {}}
                         variant="success"
                         objectType="comment"
                         buttonIndex={[0]}

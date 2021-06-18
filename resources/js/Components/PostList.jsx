@@ -139,9 +139,9 @@ export default function PostList() {
                             <Form.Check
                                 name="contentFragment"
                                 type="checkbox"
-                                label="Content fragment"
+                                label="Search content"
                                 checked={searchContent}
-                                onChange={changeSearchContent}
+                                onClick={changeSearchContent}
                             />
                         </Col>
                         <Col className="col">
@@ -150,7 +150,7 @@ export default function PostList() {
                                 type="text"
                                 value={searchString}
                                 placeholder="Here will be a search string"
-                                onClick={changeSearchString}
+                                onChange={changeSearchString}
                             />
                         </Col>
                     </Form.Row>
@@ -159,7 +159,7 @@ export default function PostList() {
             <Row className="mt-4">
                 <Col className="text-center">
                     <EditModal
-                        item={{ user_id: user.id }}
+                        item={user ? { user_id: user.id } : {}}
                         buttonIndex={[0]}
                         setItemToUpdate={setItemToUpdate}
                     />
