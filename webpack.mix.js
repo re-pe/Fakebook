@@ -27,8 +27,7 @@ const dotEnvPlugin = new webpack.DefinePlugin({
 mix
     .webpackConfig({ plugins: [new ESLintPlugin(), dotEnvPlugin] })
     .sourceMaps(false, 'source-map')
-    .copyDirectory('resources/_public', 'public')
-    .copyDirectory('resources/img', 'public/img')
+    // .copyDirectory('resources/img', 'public/img')
     .js('resources/js/index.js', 'public/js')
     .postCss('resources/css/index.css', 'public/css', [])
     .react();
